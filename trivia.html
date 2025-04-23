@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dies Irae</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="brand">Dies Irae</div>
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
+            <ul class="nav-links">
+                <li><a href="index.html">Homepage</a></li>
+                <li><a href="origin.html">The Origin</a></li>
+                <li><a href="theory.html">The Theory</a></li>
+                <li><a href="trivia.html">Trivia</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="splash">
+        <h1>DIES IRAE QUIZ</h1>
+        <button onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <div id="quiz" class="hidden">
+        <div class="quiz-container">
+            <h2 id="question">Question</h2>
+            <div id="answers" class="answers"></div>
+            <p>Score: <span id="score">0</span></p>
+            <input type="range" min="0" max="1" step="0.01" value="1" onchange="setVolume(this.value)">
+            <button onclick="toggleMute()">Mute</button>
+        </div>
+    </div>
+
+    <div id="results" class="hidden">
+        <h2>Quiz Complete!</h2>
+        <p>Your Score: <span id="finalScore"></span></p>
+        <p>High Score: <span id="highScore"></span></p>
+        <button onclick="restartQuiz()">Play Again</button>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <audio id="bg-music" src="audio/bg-music.mp3" loop></audio>
+    <audio id="correct-sound" src="audio/correct.mp3"></audio>
+    <audio id="wrong-sound" src="audio/wrong.wav"></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        const questions = [
+        { q: "What does 'Dies Irae' translate to?", a: "Day of Wrath", options: ["Day of Wrath", "Song of Death", "Funeral March", "Final Judgment"] },
+        { q: "Which period did Dies Irae originate?", a: "Medieval", options: ["Baroque", "Romantic", "Medieval", "Renaissance"] },
+        { q: "Which composer famously used Dies Irae in 'Symphonie Fantastique'?", a: "Hector Berlioz", options: ["Mozart", "Beethoven", "Hector Berlioz", "Bach"] },
+        { q: "What type of chant is Dies Irae?", a: "Gregorian Chant", options: ["Motet", "Gregorian Chant", "Mass", "Cantata"] },
+        { q: "Which film series uses Dies Irae in its score?", a: "The Shining", options: ["Avengers", "The Shining", "The Godfather", "The Incredibles"] },
+        { q: "What is the mood conveyed by Dies Irae?", a: "Judgment and Doom", options: ["Joy and Celebration", "Hope and Renewal", "Judgment and Doom", "Peace and Serenity"] },
+        { q: "How many notes are typically in the Dies Irae motif?", a: "4", options: ["4", "3", "6", "5"] },
+        { q: "Dies Irae is part of which larger work?", a: "Requiem Mass", options: ["Oratorio", "Cantata", "Requiem Mass", "Opera"] },
+        { q: "Which modern composer used Dies Irae in The Nightmare Before Christmas?", a: "Danny Elfman", options: ["John Williams", "Danny Elfman", "Hans Zimmer", "James Horner"] },
+        { q: "Which musical interval begins the Dies Irae theme?", a: "Minor second", options: ["Major third", "Perfect fifth", "Minor second", "Major sixth"] },
+        ];
+
+        let shuffledQuestions = [], current = 0, score = 0;
+        const bgMusic = document.getElementById("bg-music");
+        const correctSound = document.getElementById("correct-sound");
+        const wrongSound = document.getElementById("wrong-sound");
+
+        function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+        }
+        }
+
+        function startQuiz() {
+        document.getElementById("splash").classList.add("hidden");
+        document.getElementById("quiz").classList.remove("hidden");
+        bgMusic.volume = 1;
+        bgMusic.play();
+        shuffledQuestions = [...questions];
+        shuffle(shuffledQuestions);
+        current = 0;
+        score = 0;
+        document.getElementById("score").textContent = score;
+        showQuestion();
+        }
+
+        function showQuestion() {
+        const q = shuffledQuestions[current];
+        const shuffledOptions = [...q.options];
+        shuffle(shuffledOptions);
+        document.getElementById("question").textContent = q.q;
+        const answers = document.getElementById("answers");
+        answers.innerHTML = "";
+        shuffledOptions.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => answer(opt === q.a);
+        answers.appendChild(btn);
+        });
+        }
+
+        function answer(isCorrect) {
+        if (isCorrect) {
+        score++;
+        document.getElementById("score").textContent = score;
+        correctSound.play();
+        confetti({particleCount: 100, spread: 70, origin: { y: 0.6 }});
+        } else {
+        wrongSound.play();
+        }
+        current++;
+        if (current < shuffledQuestions.length) {
+        setTimeout(showQuestion, 500);
+        } else {
+        endQuiz();
+        }
+        }
+
+        function endQuiz() {
+        document.getElementById("quiz").classList.add("hidden");
+        document.getElementById("results").classList.remove("hidden");
+        document.getElementById("finalScore").textContent = score;
+
+        let high = parseInt(getCookie("highScore") || 0);
+        if (score > high) {
+        setCookie("highScore", score, 7);
+        high = score;
+        }
+        document.getElementById("highScore").textContent = high;
+        }
+
+        function restartQuiz() {
+        document.getElementById("results").classList.add("hidden");
+        startQuiz();
+        }
+
+        function setVolume(val) {
+        bgMusic.volume = val;
+        }
+
+        function toggleMute() {
+        bgMusic.muted = !bgMusic.muted;
+        }
+
+        function setCookie(name, value, days) {
+        const d = new Date();
+        d.setTime(d.getTime() + (days*24*60*60*1000));
+        document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
+        }
+
+        function getCookie(name) {
+        const cname = name + "=";
+        const ca = document.cookie.split(';');
+        for (let c of ca) {
+        while (c.charAt(0) === ' ') c = c.substring(1);
+        if (c.indexOf(cname) === 0) return c.substring(cname.length, c.length);
+        }
+        return "";
+        }
+
+      window.onload = function() {
+      const high = getCookie("highScore") || 0;
+      document.getElementById("splashHighScore").textContent = high;
+    }
+    </script>
+    <footer>
+        <p>&copy; 2025 Obscura Vale</p>
+        <nav class="footer-nav">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="fog.html" title="The Entity"><img src="images/theentity.webp" alt="Entity Symbol" class="entity-icon" /></a>
+        </div>
+    </footer>
+</body>
+</html>

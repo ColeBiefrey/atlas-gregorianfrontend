@@ -1,0 +1,270 @@
+body {
+    margin: 0;
+    font-family: 'Verdana', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+header {
+    background-color: #1e1e1e;
+    padding: 10px 20px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+    .nav-links li a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+        .nav-links li a:hover {
+            color: #fff;
+        }
+
+.menu-icon {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .menu-icon {
+        display: block;
+    }
+
+    .nav-links {
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        background-color: #1e1e1e;
+        padding: 10px 0;
+    }
+
+    #menu-toggle:checked + .menu-icon + .nav-links {
+        display: flex;
+    }
+}
+
+.hero {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+    .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .hero img {
+        max-width: 90%;
+        border: 2px solid #333;
+    }
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.side-nav {
+    flex: 1 1 200px;
+    margin-right: 20px;
+}
+
+    .side-nav ul {
+        list-style: none;
+        padding: 0;
+    }
+
+        .side-nav ul li {
+            margin: 10px 0;
+        }
+
+            .side-nav ul li a {
+                color: #aaa;
+                text-decoration: none;
+            }
+
+                .side-nav ul li a:hover {
+                    text-decoration: underline;
+                }
+
+.content {
+    flex: 3 1 600px;
+}
+
+    .content h2 {
+        color: #f0f0f0;
+    }
+
+    .content p {
+        line-height: 1.6;
+    }
+
+footer {
+    background-color: #1a1a1a;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+.footer-nav {
+    margin: 10px 0;
+}
+
+    .footer-nav a {
+        color: #888;
+        margin: 0 10px;
+        text-decoration: none;
+    }
+
+        .footer-nav a:hover {
+            color: #fff;
+        }
+
+.social-icons a {
+    color: #999;
+    margin: 0 10px;
+    font-size: 1.2rem;
+}
+
+    .social-icons a:hover {
+        color: #fff;
+    }
+
+.entity-icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    filter: grayscale(100%) brightness(200%);
+    transition: transform 0.2s ease;
+}
+
+    .entity-icon:hover {
+        transform: scale(1.2);
+        filter: grayscale(0%) brightness(150%);
+    }
+
+.image-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+    .image-group img {
+        max-width: 100%;
+        height: auto;
+        width: calc(33% - 10px);
+        border: 1px solid #333;
+        border-radius: 4px;
+        object-fit: cover;
+    }
+
+@media (max-width: 768px) {
+    .image-group img {
+        width: 100%;
+    }
+}
+
+body {
+    background: #000;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #ffcc00;
+    text-shadow: 2px 2px #990000;
+}
+
+button {
+    font-family: inherit;
+    background: #222;
+    color: #ffcc00;
+    border: 2px solid #ffcc00;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    button:hover {
+        background: #ffcc00;
+        color: #000;
+    }
+
+.quiz-container {
+    margin: 30px auto;
+    padding: 20px;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+}
+
+.answers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.hidden {
+    display: none;
+}
+
+input[type="range"] {
+    width: 200px;
+    margin: 10px auto;
+}
+
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    .quiz-container {
+        padding: 15px;
+        font-size: 14px;
+    }
+
+    button {
+        width: 80%;
+    }
+
+    input[type="range"] {
+        width: 80%;
+    }
+}
+
