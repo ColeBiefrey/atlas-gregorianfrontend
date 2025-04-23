@@ -2,6 +2,8 @@ This is a website dedicated to Gregorian Chant and specifically, the Dies Irae.
 
 The Dies Irae is important to me because it shaped alot of my interest in musical theory, but also my own personal style of composition.
 
+The website itself is intended to come off as an early 90s mini wiki, as Im not really a huge fan of what wikis have become.  Bring back my chunks of edutainment, gosh darnit.
+
 The website should be mostly responsive on to resolution on all pages, stereotypical hamburger menu go brr.
 
 There are two Javascript frameworks, the Trivia page houses a cute little quiz, and the secret Entity button
