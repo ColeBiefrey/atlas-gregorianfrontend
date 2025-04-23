@@ -9,4 +9,4 @@ at the bottom of the page links to an incomplete, buggy mini Dead by Daylight.
 
 The Quiz also contains cookies that houses and remembers your score for a few days, if it decides to work.
 
-Github Host: 
+Github Host: https://colebiefrey.github.io/atlas-gregorianfrontend/
